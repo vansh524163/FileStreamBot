@@ -1,4 +1,3 @@
-<!--(c) Code-X-Mania-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -195,6 +194,19 @@
         color: #ffffff;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
+    
+    #copyright-text {
+        color: var(--footer-font-color);
+        font-size: 1.1rem;
+    }
+    
+    .text-center {
+        color: #fff;
+    }
+    
+    .link {
+        color: #ff001e;
+    }
 </style>
 
 <body>
@@ -215,7 +227,8 @@
         <!-- video -->
 
         <video id="video-fully-responsive" controls>
-            <source src=%s type="video/mp4">
+            <video id="player" class="player" src="{{file_url}}" type="video/mp4" playsinline controls
+            width="100%"></video>
         </video>
 
         <!-- video end -->
@@ -271,7 +284,7 @@
             );
 
             const videolink = window.location.href;
-            const vanshlink = videolink.replace("/watch/", "/");
+            const vanshlink = videolink.replace("/watch/", "/dl");
 
             function vlc_player() {
                 const openvanshlink = vanshlink;
@@ -291,11 +304,12 @@
                 window.location.href = openPlayit;
             }
 
-            function s_player() {
-                const openvanshlink = vanshlink;
-                const openSplayer = `intent:${openvanshlink}#Intent;action=com.young.simple.player.playback_online;package=com.young.simple.player;end`;
-                window.location.href = openSplayer;
+            function n_player() {
+                const openstreamlink = streamlink;
+                const openNplayer = `nplayer-${openstreamlink}`;
+                window.location.href = openNplayer;
             }
+
 
             function km_player() {
                 const openvanshlink = vanshlink;
@@ -308,6 +322,52 @@
                 const openHDplayer = `intent:${openvanshlink}#Intent;package=uplayer.video.player;end`;
                 window.location.href = openHDplayer;
             }
+
+            function streamDownload() {
+                const openstreamlink = streamlink;
+                window.location.href = openstreamlink;
+            }
+
+
+            // video player 
+            const controls = [
+                'play-large',
+                'rewind', 'play',
+                'fast-forward',
+                'progress',
+                'current-time',
+                'duration',
+                //'mute',
+                //'volume',
+                'captions',
+                'settings',
+                'pip',
+                'airplay',
+                // 'download',
+                'fullscreen'
+            ];
+            document.addEventListener('DOMContentLoaded', () => {
+                const player = Plyr.setup('.player', {
+                    controls
+                });
+            });
+
+            // disabling right click
+            document.addEventListener("contextmenu", function(e) {
+                e.preventDefault();
+            });
+            document.addEventListener('keydown', function(e) {
+                if (
+                    e.key === 'F12' ||
+                    (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                    (e.ctrlKey && e.key === 'u') ||
+                    e.ctrlKey ||
+                    e.shiftKey ||
+                    e.altKey
+                ) {
+                    e.preventDefault();
+                }
+            });
         </script>
 
         <!-- video player settings end -->
@@ -326,8 +386,8 @@
         <button onclick="vlc_player()">VLC PLAYER</button>
         <button onclick="mx_player()">MX Player</button>
         <button onclick="playit_player()">PlayIt Player</button>
-        <button onclick="s_player()">S Player</button>
-        <button class="button">Download Now</button>
+        <button onclick="n_player()">S Player</button>
+        <button onclick="streamDownload()">Download Now</button>
     </center>
 
     <center>
@@ -417,7 +477,10 @@
             </li>
         </ul>
 
-    </center>
+        <center>
+            <h5 class="text-center">Copyright © 2024 <a class="link" href="https://github.com/AviPatilPro"><span
+        style="font-weight: 700;">Vansh Yadav</span></a>. All Rights Reserved.</h5>
+        </center>
 
 </body>
 
